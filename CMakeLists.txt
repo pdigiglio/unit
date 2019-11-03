@@ -16,4 +16,15 @@ if (DOXYGEN_FOUND)
         COMMENT "Generating documentation with Doxygen" VERBATIM)
 endif (DOXYGEN_FOUND)
 
+# -- Default C++ flags --
+include(CheckCXXCompilerFlag)
+check_cxx_compiler_flag("-std=c++14" COMPILER_SUPPORTS_CXX14)
+if(COMPILER_SUPPORTS_CXX14)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+else()
+    message(FATAL_ERROR "Compiler ${CMAKE_CXX_COMPILER} has no C++14 support")
+endif()
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Werror -Wall -Wextra")
+
 add_executable(main main.cpp)
